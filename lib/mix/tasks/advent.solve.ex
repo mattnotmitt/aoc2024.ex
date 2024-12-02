@@ -132,7 +132,6 @@ defmodule Mix.Tasks.Advent.Solve do
     parsed = module.parse(input)
 
     run_benchmarks(%{
-      Parse: fn -> module.parse(input) end,
       "Part #{part}": fn -> apply(module, :"part#{part}", [parsed]) end
     })
   end
@@ -159,14 +158,13 @@ defmodule Mix.Tasks.Advent.Solve do
     parsed = module.parse(input)
 
     run_benchmarks(%{
-      Parse: fn -> module.parse(input) end,
       "Part 1": fn -> module.part1(parsed) end,
       "Part 2": fn -> module.part2(parsed) end
     })
   end
 
   defp run_benchmarks(benchmarks) do
-    Benchee.run(benchmarks, print: [configuration: false])
+    Benchee.run(benchmarks, print: [configuration: false], memory_time: 2)
   end
 
   defp run_and_print_result(module, part, input) do
